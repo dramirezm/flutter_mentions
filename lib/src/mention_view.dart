@@ -363,7 +363,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
       widget.onMarkupChanged(controller.markupText);
     }
 
-    if (widget.onSearchChanged != null && _selectedMention.str != null) {
+    if (widget.onSearchChanged != null && _selectedMention != null && _selectedMention.str != null) {
       final str = _selectedMention.str.toLowerCase();
 
       widget.onSearchChanged(str[0], str.substring(1));
