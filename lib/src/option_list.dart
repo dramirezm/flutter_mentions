@@ -5,6 +5,7 @@ class OptionList extends StatelessWidget {
     @required this.data,
     @required this.onTap,
     @required this.suggestionListHeight,
+    this.listContainerMargin,
     this.suggestionBuilder,
     this.suggestionListDecoration,
   });
@@ -16,6 +17,7 @@ class OptionList extends StatelessWidget {
   final Function(Map<String, dynamic>) onTap;
 
   final double suggestionListHeight;
+  final double listContainerMargin;
 
   final BoxDecoration suggestionListDecoration;
 
@@ -23,7 +25,7 @@ class OptionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return data.isNotEmpty
         ? Container(
-            margin: EdgeInsets.only(bottom: 50,right: 16,left: 16),
+            margin: EdgeInsets.only(bottom: listContainerMargin != null ? 0 : listContainerMargin,right: 16,left: 16),
             decoration:
                 suggestionListDecoration ?? BoxDecoration(color: Colors.white),
             constraints: BoxConstraints(
