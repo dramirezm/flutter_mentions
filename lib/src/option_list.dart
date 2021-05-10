@@ -23,7 +23,7 @@ class OptionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return data.isNotEmpty
         ? Container(
-            margin: EdgeInsets.only(bottom: 100),
+            margin: EdgeInsets.only(bottom: 50,right: 16,left: 16),
             decoration:
                 suggestionListDecoration ?? BoxDecoration(color: Colors.white),
             constraints: BoxConstraints(
