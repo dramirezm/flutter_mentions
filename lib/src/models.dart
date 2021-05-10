@@ -4,9 +4,9 @@ enum SuggestionPosition { Top, Bottom }
 
 class LengthMap {
   LengthMap({
-    required this.start,
-    required this.end,
-    required this.str,
+    @required this.start,
+    @required this.end,
+    @required this.str,
   });
 
   String str;
@@ -16,7 +16,7 @@ class LengthMap {
 
 class Mention {
   Mention({
-    required this.trigger,
+    @required this.trigger,
     this.data = const [],
     this.style,
     this.matchAll = false,
@@ -36,7 +36,7 @@ class Mention {
   final List<Map<String, dynamic>> data;
 
   /// Style for the mention item in Input.
-  final TextStyle? style;
+  final TextStyle style;
 
   /// Should every non-suggestion with the trigger character be matched
   final bool matchAll;
@@ -45,16 +45,16 @@ class Mention {
   final bool disableMarkup;
 
   /// Build Custom suggestion widget using this builder.
-  final Widget Function(Map<String, dynamic>)? suggestionBuilder;
+  final Widget Function(Map<String, dynamic>) suggestionBuilder;
 
   /// Allows to set custom markup for the mentioned item.
-  final String Function(String trigger, String mention, String value)?
+  final String Function(String trigger, String mention, String value)
       markupBuilder;
 }
 
 class Annotation {
   Annotation({
-    required this.trigger,
+    @required this.trigger,
     this.style,
     this.id,
     this.display,
@@ -62,11 +62,11 @@ class Annotation {
     this.markupBuilder,
   });
 
-  TextStyle? style;
-  String? id;
-  String? display;
+  TextStyle style;
+  String id;
+  String display;
   String trigger;
   bool disableMarkup;
-  final String Function(String trigger, String mention, String value)?
+  final String Function(String trigger, String mention, String value)
       markupBuilder;
 }
