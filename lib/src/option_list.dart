@@ -2,10 +2,9 @@ part of flutter_mentions;
 
 class OptionList extends StatelessWidget {
   OptionList({
-    @required this.data,
-    @required this.onTap,
-    @required this.suggestionListHeight,
-    this.listContainerMargin,
+    this.data,
+    this.onTap,
+    this.suggestionListHeight,
     this.suggestionBuilder,
     this.suggestionListDecoration,
   });
@@ -17,7 +16,6 @@ class OptionList extends StatelessWidget {
   final Function(Map<String, dynamic>) onTap;
 
   final double suggestionListHeight;
-  final double listContainerMargin;
 
   final BoxDecoration suggestionListDecoration;
 
@@ -25,35 +23,34 @@ class OptionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return data.isNotEmpty
         ? Container(
-            margin: EdgeInsets.only(bottom:listContainerMargin,right: 16,left: 16),
-            decoration:
-                suggestionListDecoration ?? BoxDecoration(color: Colors.white),
-            constraints: BoxConstraints(
-              maxHeight: suggestionListHeight,
-              minHeight: 0,
+      decoration:
+      suggestionListDecoration ?? BoxDecoration(color: Colors.white),
+      constraints: BoxConstraints(
+        maxHeight: suggestionListHeight,
+        minHeight: 0,
+      ),
+      child: ListView.builder(
+        itemCount: data.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              onTap(data[index]);
+            },
+            child: suggestionBuilder != null
+                ? suggestionBuilder(data[index])
+                : Container(
+              color: Colors.blue,
+              padding: EdgeInsets.all(20.0),
+              child: Text(
+                data[index]['display'],
+                style: TextStyle(fontSize: 12),
+              ),
             ),
-            child: ListView.builder(
-              itemCount: data.length,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    onTap(data[index]);
-                  },
-                  child: suggestionBuilder != null
-                      ? suggestionBuilder(data[index])
-                      : Container(
-                          color: Colors.blue,
-                          padding: EdgeInsets.all(20.0),
-                          child: Text(
-                            data[index]['display'],
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
-                );
-              },
-            ),
-          )
+          );
+        },
+      ),
+    )
         : Container();
   }
 }
