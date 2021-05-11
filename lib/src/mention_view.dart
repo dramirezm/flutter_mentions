@@ -426,23 +426,26 @@ class FlutterMentionsState extends State<FlutterMentions> {
           valueListenable: showSuggestions,
           builder: (BuildContext context, bool show, Widget child) {
             return show && !widget.hideSuggestionList
-                ? OptionList(
-                    suggestionListHeight: widget.suggestionListHeight,
-                    suggestionBuilder: list.suggestionBuilder,
-                    suggestionListDecoration: widget.suggestionListDecoration,
-                    data: list.data.where((element) {
-                      final ele = element['display'].toLowerCase();
-                      final str = _selectedMention.str
-                          .toLowerCase()
-                          .replaceAll(RegExp(_pattern), '');
+                ? showDialog(
+                    context: context,
+                  child: OptionList(
+                      suggestionListHeight: widget.suggestionListHeight,
+                      suggestionBuilder: list.suggestionBuilder,
+                      suggestionListDecoration: widget.suggestionListDecoration,
+                      data: list.data.where((element) {
+                        final ele = element['display'].toLowerCase();
+                        final str = _selectedMention.str
+                            .toLowerCase()
+                            .replaceAll(RegExp(_pattern), '');
 
-                      return ele == str ? false : ele.contains(str);
-                    }).toList(),
-                    onTap: (value) {
-                      addMention(value, list);
-                      showSuggestions.value = false;
-                    },
-                  )
+                        return ele == str ? false : ele.contains(str);
+                      }).toList(),
+                      onTap: (value) {
+                        addMention(value, list);
+                        showSuggestions.value = false;
+                      },
+                    ),
+                )
                 : Container();
           },
         ),
