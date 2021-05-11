@@ -408,6 +408,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
   Future<bool> _willPopCallback() async {
     setState(() {
+      print('Mentions open and pop');
     });
     return true; // return true if the route to be popped
   }
@@ -420,9 +421,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
             (element) => _selectedMention.str.contains(element.trigger))
         : widget.mentions[0];
 
-    return WillPopScope(
-      onWillPop: _willPopCallback,
-      child: Container(
+    return  Container(
         child: PortalEntry(
           portalAnchor: widget.suggestionPosition == SuggestionPosition.Bottom
               ? Alignment.topCenter
@@ -434,23 +433,26 @@ class FlutterMentionsState extends State<FlutterMentions> {
             valueListenable: showSuggestions,
             builder: (BuildContext context, bool show, Widget child) {
               return show && !widget.hideSuggestionList
-                  ? OptionList(
-                      suggestionListHeight: widget.suggestionListHeight,
-                      suggestionBuilder: list.suggestionBuilder,
-                      suggestionListDecoration: widget.suggestionListDecoration,
-                      data: list.data.where((element) {
-                        final ele = element['display'].toLowerCase();
-                        final str = _selectedMention.str
-                            .toLowerCase()
-                            .replaceAll(RegExp(_pattern), '');
+                  ? WillPopScope(
+                    onWillPop: _willPopCallback,
+                    child: OptionList(
+                        suggestionListHeight: widget.suggestionListHeight,
+                        suggestionBuilder: list.suggestionBuilder,
+                        suggestionListDecoration: widget.suggestionListDecoration,
+                        data: list.data.where((element) {
+                          final ele = element['display'].toLowerCase();
+                          final str = _selectedMention.str
+                              .toLowerCase()
+                              .replaceAll(RegExp(_pattern), '');
 
-                        return ele == str ? false : ele.contains(str);
-                      }).toList(),
-                      onTap: (value) {
-                        addMention(value, list);
-                        showSuggestions.value = false;
-                      },
-                    )
+                          return ele == str ? false : ele.contains(str);
+                        }).toList(),
+                        onTap: (value) {
+                          addMention(value, list);
+                          showSuggestions.value = false;
+                        },
+                      ),
+                  )
                   : Container();
             },
           ),
@@ -498,7 +500,6 @@ class FlutterMentionsState extends State<FlutterMentions> {
             ],
           ),
         ),
-      ),
     );
   }
 }
