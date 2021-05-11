@@ -406,13 +406,6 @@ class FlutterMentionsState extends State<FlutterMentions> {
     controller.mapping = mapToAnotation();
   }
 
-  Future<bool> _willPopCallback() async {
-    setState(() {
-      print('Mentions open and pop');
-    });
-    return true; // return true if the route to be popped
-  }
-
   @override
   Widget build(BuildContext context) {
     // Filter the list based on the selection
@@ -421,85 +414,85 @@ class FlutterMentionsState extends State<FlutterMentions> {
             (element) => _selectedMention.str.contains(element.trigger))
         : widget.mentions[0];
 
-    return  Container(
-        child: PortalEntry(
-          portalAnchor: widget.suggestionPosition == SuggestionPosition.Bottom
-              ? Alignment.topCenter
-              : Alignment.bottomCenter,
-          childAnchor: widget.suggestionPosition == SuggestionPosition.Bottom
-              ? Alignment.bottomCenter
-              : Alignment.topCenter,
-          portal: ValueListenableBuilder(
-            valueListenable: showSuggestions,
-            builder: (BuildContext context, bool show, Widget child) {
-              return show && !widget.hideSuggestionList
-                  ? WillPopScope(
-                    onWillPop: _willPopCallback,
-                    child: OptionList(
-                        suggestionListHeight: widget.suggestionListHeight,
-                        suggestionBuilder: list.suggestionBuilder,
-                        suggestionListDecoration: widget.suggestionListDecoration,
-                        data: list.data.where((element) {
-                          final ele = element['display'].toLowerCase();
-                          final str = _selectedMention.str
-                              .toLowerCase()
-                              .replaceAll(RegExp(_pattern), '');
+    return Container(
+      child: PortalEntry(
+        portalAnchor: widget.suggestionPosition == SuggestionPosition.Bottom
+            ? Alignment.topCenter
+            : Alignment.bottomCenter,
+        childAnchor: widget.suggestionPosition == SuggestionPosition.Bottom
+            ? Alignment.bottomCenter
+            : Alignment.topCenter,
+        portal: ValueListenableBuilder(
+          valueListenable: showSuggestions,
+          builder: (BuildContext context, bool show, Widget child) {
+            return show && !widget.hideSuggestionList
+                ? OptionList(
+                    suggestionListHeight: widget.suggestionListHeight,
+                    suggestionBuilder: list.suggestionBuilder,
+                    suggestionListDecoration: widget.suggestionListDecoration,
+                    data: list.data.where((element) {
+                      final ele = element['display'].toLowerCase();
+                      final str = _selectedMention.str
+                          .toLowerCase()
+                          .replaceAll(RegExp(_pattern), '');
 
-                          return ele == str ? false : ele.contains(str);
-                        }).toList(),
-                        onTap: (value) {
-                          addMention(value, list);
-                          showSuggestions.value = false;
-                        },
-                      ),
+                      return ele == str ? false : ele.contains(str);
+                    }).toList(),
+                    onTap: (value) {
+                      addMention(value, list);
+                      showSuggestions.value = false;
+                    },
+              onClose: (){
+                      showSuggestions.value = false;
+              },
                   )
-                  : Container();
-            },
-          ),
-          child: Row(
-            children: [
-              ...widget.leading,
-              Expanded(
-                child: TextField(
-                  maxLines: widget.maxLines,
-                  minLines: widget.minLines,
-                  maxLength: widget.maxLength,
-                  focusNode: widget.focusNode,
-                  keyboardType: widget.keyboardType,
-                  keyboardAppearance: widget.keyboardAppearance,
-                  textInputAction: widget.textInputAction,
-                  textCapitalization: widget.textCapitalization,
-                  style: widget.style,
-                  textAlign: widget.textAlign,
-                  textDirection: widget.textDirection,
-                  readOnly: widget.readOnly,
-                  showCursor: widget.showCursor,
-                  autofocus: widget.autofocus,
-                  autocorrect: widget.autocorrect,
-                  // maxLengthEnforcement: widget.maxLengthEnforcement,
-                  cursorColor: widget.cursorColor,
-                  cursorRadius: widget.cursorRadius,
-                  cursorWidth: widget.cursorWidth,
-                  buildCounter: widget.buildCounter,
-                  autofillHints: widget.autofillHints,
-                  decoration: widget.decoration,
-                  expands: widget.expands,
-                  onEditingComplete: widget.onEditingComplete,
-                  onTap: widget.onTap,
-                  onSubmitted: widget.onSubmitted,
-                  enabled: widget.enabled,
-                  enableInteractiveSelection: widget.enableInteractiveSelection,
-                  enableSuggestions: widget.enableSuggestions,
-                  scrollController: widget.scrollController,
-                  scrollPadding: widget.scrollPadding,
-                  scrollPhysics: widget.scrollPhysics,
-                  controller: controller,
-                ),
-              ),
-              ...widget.trailing,
-            ],
-          ),
+                : Container();
+          },
         ),
+        child: Row(
+          children: [
+            ...widget.leading,
+            Expanded(
+              child: TextField(
+                maxLines: widget.maxLines,
+                minLines: widget.minLines,
+                maxLength: widget.maxLength,
+                focusNode: widget.focusNode,
+                keyboardType: widget.keyboardType,
+                keyboardAppearance: widget.keyboardAppearance,
+                textInputAction: widget.textInputAction,
+                textCapitalization: widget.textCapitalization,
+                style: widget.style,
+                textAlign: widget.textAlign,
+                textDirection: widget.textDirection,
+                readOnly: widget.readOnly,
+                showCursor: widget.showCursor,
+                autofocus: widget.autofocus,
+                autocorrect: widget.autocorrect,
+                // maxLengthEnforcement: widget.maxLengthEnforcement,
+                cursorColor: widget.cursorColor,
+                cursorRadius: widget.cursorRadius,
+                cursorWidth: widget.cursorWidth,
+                buildCounter: widget.buildCounter,
+                autofillHints: widget.autofillHints,
+                decoration: widget.decoration,
+                expands: widget.expands,
+                onEditingComplete: widget.onEditingComplete,
+                onTap: widget.onTap,
+                onSubmitted: widget.onSubmitted,
+                enabled: widget.enabled,
+                enableInteractiveSelection: widget.enableInteractiveSelection,
+                enableSuggestions: widget.enableSuggestions,
+                scrollController: widget.scrollController,
+                scrollPadding: widget.scrollPadding,
+                scrollPhysics: widget.scrollPhysics,
+                controller: controller,
+              ),
+            ),
+            ...widget.trailing,
+          ],
+        ),
+      ),
     );
   }
 }
