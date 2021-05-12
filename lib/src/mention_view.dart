@@ -255,6 +255,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
   ValueNotifier<bool> showSuggestions = ValueNotifier(false);
   LengthMap _selectedMention;
   String _pattern = '';
+  bool showCursor = true;
 
   Map<String, Annotation> mapToAnotation() {
     final data = <String, Annotation>{};
@@ -302,6 +303,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
     setState(() {
       _selectedMention = null;
+      showCursor = false;
     });
 
     final _list = widget.mentions
@@ -330,6 +332,10 @@ class FlutterMentionsState extends State<FlutterMentions> {
           selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
       );
     }
+
+    setState(() {
+      showCursor = true;
+    });
   }
 
   void suggestionListerner() {
@@ -477,7 +483,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
                 textAlign: widget.textAlign,
                 textDirection: widget.textDirection,
                 readOnly: widget.readOnly,
-                showCursor: widget.showCursor,
+                showCursor: showCursor,
                 autofocus: widget.autofocus,
                 autocorrect: widget.autocorrect,
                 // maxLengthEnforcement: widget.maxLengthEnforcement,
