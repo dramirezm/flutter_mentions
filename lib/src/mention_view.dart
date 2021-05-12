@@ -322,15 +322,24 @@ class FlutterMentionsState extends State<FlutterMentions> {
       "${_list.trigger}${value['display']}${widget.appendSpaceOnAdd ? ' ' : ''}",
     );
 
+
+
     if (widget.onMentionAdd != null) widget.onMentionAdd(value);
 
     // if(Platform.isAndroid) {
       // Move the cursor to next position after the new mentioned item.
-      var nextCursorPosition =
-          selectedMention.start + 1 + value['display']?.length as int ?? 2;
+      var nextCursorPosition = selectedMention.start + 1 + value['display']?.length ?? 0;
+
       if (widget.appendSpaceOnAdd) nextCursorPosition++;
       controller.selection =
           TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
+
+    print("FLutterMentions CurrentText ${currentText}");
+    print("FLutterMentions SelectedMentionStart ${selectedMention.start}");
+    print("FLutterMentions SelectedMentionStart ${selectedMention.end}");
+    print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
+    print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
+
     // }else{
     //   controller.value = TextEditingValue(
     //       text: currentText,
@@ -338,9 +347,6 @@ class FlutterMentionsState extends State<FlutterMentions> {
     //   );
     // }
 
-    setState(() {
-      showCursor = true;
-    });
   }
 
   void suggestionListerner() {
@@ -461,7 +467,6 @@ class FlutterMentionsState extends State<FlutterMentions> {
                       return ele == str ? false : ele.contains(str);
                     }).toList(),
                     onTap: (value) async {
-                      hideCursor();
                       addMention(value, list);
                       showSuggestions.value = false;
                     },
@@ -489,7 +494,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
                 textAlign: widget.textAlign,
                 textDirection: widget.textDirection,
                 readOnly: widget.readOnly,
-                showCursor: showCursor,
+                showCursor: widget.showCursor,
                 autofocus: widget.autofocus,
                 autocorrect: widget.autocorrect,
                 // maxLengthEnforcement: widget.maxLengthEnforcement,
