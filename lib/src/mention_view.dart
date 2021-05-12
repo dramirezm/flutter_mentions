@@ -314,10 +314,10 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
     if (widget.onMentionAdd != null) widget.onMentionAdd(value);
 
-    controller.value = TextEditingValue(
-        text: currentText,
-        selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
-    );
+    // controller.value = TextEditingValue(
+    //     text: currentText,
+    //     selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
+    // );
 
     // Move the cursor to next position after the new mentioned item.
     // var nextCursorPosition =
