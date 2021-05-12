@@ -452,9 +452,10 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
                       return ele == str ? false : ele.contains(str);
                     }).toList(),
-                    onTap: (value) {
-                      addMention(value, list);
+                    onTap: (value) async {
                       showSuggestions.value = false;
+                      await Future.delayed(Duration(milliseconds: 100));
+                      addMention(value, list);
                     },
               onClose: (){
                       showSuggestions.value = false;
