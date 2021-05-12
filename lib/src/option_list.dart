@@ -24,7 +24,7 @@ class OptionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OverlayEntry overlayEntry;
-    overlayEntry = OverlayEntry(builder: (BuildContext context) {
+   overlayEntry = OverlayEntry(builder: (BuildContext context) {
       return data.isNotEmpty
           ? WillPopScope(
         onWillPop: onClose,
@@ -65,6 +65,8 @@ class OptionList extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Overlay.of(context).insert(overlayEntry);
     });
+
+    return Container();
 
   }
 }
