@@ -308,19 +308,19 @@ class FlutterMentionsState extends State<FlutterMentions> {
   void addMention(Map<String, dynamic> value, [Mention list]) async{
     final selectedMention = _selectedMention;
 
-    setState(() {
+   // setState(() {
       _selectedMention = null;
-    });
+   // });
 
-    final _list = widget.mentions
-        .firstWhere((element) => selectedMention.str.contains(element.trigger));
-
-    // find the text by range and replace with the new value.
-    final currentText = controller.text = controller.value.text.replaceRange(
-      selectedMention.start,
-      selectedMention.end,
-      "${_list.trigger}${value['display']}${widget.appendSpaceOnAdd ? ' ' : ''}",
-    );
+    // final _list = widget.mentions
+    //     .firstWhere((element) => selectedMention.str.contains(element.trigger));
+    //
+    // // find the text by range and replace with the new value.
+    // final currentText = controller.text = controller.value.text.replaceRange(
+    //   selectedMention.start,
+    //   selectedMention.end,
+    //   "${_list.trigger}${value['display']}${widget.appendSpaceOnAdd ? ' ' : ''}",
+    // );
 
 
 
@@ -328,17 +328,17 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
     // if(Platform.isAndroid) {
       // Move the cursor to next position after the new mentioned item.
-      var nextCursorPosition = selectedMention.start + 1 + value['display']?.length ?? 0;
+      // var nextCursorPosition = selectedMention.start + 1 + value['display']?.length ?? 0;
 
-      if (widget.appendSpaceOnAdd) nextCursorPosition++;
+      // if (widget.appendSpaceOnAdd) nextCursorPosition++;
       controller.selection =
-          TextSelection.fromPosition(TextPosition(offset: currentText.length));
+          TextSelection.fromPosition(TextPosition(offset: controller.value.text.length));
 
-    print("FLutterMentions CurrentText ${currentText}");
+    print("FLutterMentions CurrentText ${controller.value.text.length}");
     print("FLutterMentions SelectedMentionStart ${selectedMention.start}");
-    print("FLutterMentions SelectedMentionStart ${selectedMention.end}");
-    print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
-    print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
+    print("FLutterMentions SelectedMentionEnd ${selectedMention.end}");
+    // print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
+    // print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
 
     // }else{
     //   controller.value = TextEditingValue(
