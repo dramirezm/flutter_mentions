@@ -297,10 +297,12 @@ class FlutterMentionsState extends State<FlutterMentions> {
     return data;
   }
 
-  void addMention(Map<String, dynamic> value, [Mention list]) {
+  void addMention(Map<String, dynamic> value, [Mention list]) async{
     final selectedMention = _selectedMention;
 
-
+    setState(() {
+      _selectedMention = null;
+    });
 
     final _list = widget.mentions
         .firstWhere((element) => selectedMention.str.contains(element.trigger));
@@ -314,8 +316,6 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
     if (widget.onMentionAdd != null) widget.onMentionAdd(value);
 
-
-
     if(Platform.isAndroid) {
       // Move the cursor to next position after the new mentioned item.
       var nextCursorPosition =
@@ -324,15 +324,12 @@ class FlutterMentionsState extends State<FlutterMentions> {
       controller.selection =
           TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
     }else{
+      await Future.delayed(Duration(milliseconds: 100));
       controller.value = TextEditingValue(
           text: currentText,
           selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
       );
     }
-
-    setState(() {
-      _selectedMention = null;
-    });
   }
 
   void suggestionListerner() {
@@ -453,9 +450,8 @@ class FlutterMentionsState extends State<FlutterMentions> {
                       return ele == str ? false : ele.contains(str);
                     }).toList(),
                     onTap: (value) async {
-                      showSuggestions.value = false;
-                      await Future.delayed(Duration(milliseconds: 100));
                       addMention(value, list);
+                      showSuggestions.value = false;
                     },
               onClose: (){
                       showSuggestions.value = false;
