@@ -298,12 +298,17 @@ class FlutterMentionsState extends State<FlutterMentions> {
     return data;
   }
 
+  void hideCursor(){
+    setState(() {
+      showCursor = false;
+    });
+  }
+
   void addMention(Map<String, dynamic> value, [Mention list]) async{
     final selectedMention = _selectedMention;
 
     setState(() {
       _selectedMention = null;
-      showCursor = false;
     });
 
     final _list = widget.mentions
@@ -456,6 +461,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
                       return ele == str ? false : ele.contains(str);
                     }).toList(),
                     onTap: (value) async {
+                      hideCursor();
                       addMention(value, list);
                       showSuggestions.value = false;
                     },
