@@ -300,9 +300,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
   void addMention(Map<String, dynamic> value, [Mention list]) {
     final selectedMention = _selectedMention;
 
-    setState(() {
-      _selectedMention = null;
-    });
+
 
     final _list = widget.mentions
         .firstWhere((element) => selectedMention.str.contains(element.trigger));
@@ -331,6 +329,10 @@ class FlutterMentionsState extends State<FlutterMentions> {
           selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
       );
     }
+
+    setState(() {
+      _selectedMention = null;
+    });
   }
 
   void suggestionListerner() {
