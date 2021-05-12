@@ -332,7 +332,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
       if (widget.appendSpaceOnAdd) nextCursorPosition++;
       controller.selection =
-          TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
+          TextSelection.fromPosition(TextPosition(offset: currentText.length));
 
     print("FLutterMentions CurrentText ${currentText}");
     print("FLutterMentions SelectedMentionStart ${selectedMention.start}");
