@@ -322,11 +322,11 @@ class FlutterMentionsState extends State<FlutterMentions> {
     // );
 
     // Move the cursor to next position after the new mentioned item.
-    // var nextCursorPosition =
-    //     selectedMention.start + 1 + value['display']?.length as int ?? 0;
-    // if (widget.appendSpaceOnAdd) nextCursorPosition++;
-    // controller.selection =
-    //     TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
+    var nextCursorPosition =
+        selectedMention.start + 1 + value['display']?.length as int ?? 0;
+    if (widget.appendSpaceOnAdd) nextCursorPosition++;
+    controller.selection =
+        TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
   }
 
   void suggestionListerner() {
