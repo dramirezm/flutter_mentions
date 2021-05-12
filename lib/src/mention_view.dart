@@ -308,7 +308,9 @@ class FlutterMentionsState extends State<FlutterMentions> {
   void addMention(Map<String, dynamic> value, [Mention list]) async{
     final selectedMention = _selectedMention;
 
-
+    setState(() {
+      _selectedMention = null;
+    });
 
     final _list = widget.mentions
         .firstWhere((element) => selectedMention.str.contains(element.trigger));
@@ -325,7 +327,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
     // if(Platform.isAndroid) {
       // Move the cursor to next position after the new mentioned item.
       var nextCursorPosition =
-          selectedMention.start + 1 + value['display']?.length as int ?? 0;
+          selectedMention.start + 1 + value['display']?.length as int ?? 2;
       if (widget.appendSpaceOnAdd) nextCursorPosition++;
       controller.selection =
           TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
@@ -338,10 +340,6 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
     setState(() {
       showCursor = true;
-    });
-
-    setState(() {
-      _selectedMention = null;
     });
   }
 
