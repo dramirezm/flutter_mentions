@@ -32,40 +32,43 @@ class OptionList extends StatelessWidget {
             Container(
               color: Colors.black12,
               width: MediaQuery.of(context).size.width,
-              height: suggestionListHeight,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: GestureDetector(
                 onTap: onClose,
               ),
             ),
-            Container(
-              decoration:
-              suggestionListDecoration ?? BoxDecoration(color: Colors.white),
-              constraints: BoxConstraints(
-                maxHeight: suggestionListHeight,
-                minHeight: 0,
-                minWidth: 0,
-                maxWidth: suggestionListWidth,
-              ),
-              child: ListView.builder(
-                itemCount: data.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      onTap(data[index]);
-                    },
-                    child: suggestionBuilder != null
-                        ? suggestionBuilder(data[index])
-                        : Container(
-                      color: Colors.blue,
-                      padding: EdgeInsets.all(20.0),
-                      child: Text(
-                        data[index]['display'],
-                        style: TextStyle(fontSize: 12),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                decoration:
+                suggestionListDecoration ?? BoxDecoration(color: Colors.white),
+                constraints: BoxConstraints(
+                  maxHeight: suggestionListHeight,
+                  minHeight: 0,
+                  minWidth: 0,
+                  maxWidth: suggestionListWidth,
+                ),
+                child: ListView.builder(
+                  itemCount: data.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        onTap(data[index]);
+                      },
+                      child: suggestionBuilder != null
+                          ? suggestionBuilder(data[index])
+                          : Container(
+                        color: Colors.blue,
+                        padding: EdgeInsets.all(20.0),
+                        child: Text(
+                          data[index]['display'],
+                          style: TextStyle(fontSize: 12),
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
 
