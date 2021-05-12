@@ -28,37 +28,47 @@ class OptionList extends StatelessWidget {
     return data.isNotEmpty
         ? WillPopScope(
       onWillPop: onClose,
-          child: Container(
-      decoration:
-      suggestionListDecoration ?? BoxDecoration(color: Colors.white),
-      constraints: BoxConstraints(
-          maxHeight: suggestionListHeight,
-          minHeight: 0,
-          minWidth: 0,
-          maxWidth: suggestionListWidth,
-      ),
-      child: ListView.builder(
-          itemCount: data.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                onTap(data[index]);
-              },
-              child: suggestionBuilder != null
-                  ? suggestionBuilder(data[index])
-                  : Container(
-                color: Colors.blue,
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  data[index]['display'],
-                  style: TextStyle(fontSize: 12),
-                ),
+          child: Stack(children: [
+            GestureDetector(
+              onTap: onClose,
+              child: Container(
+                color: Colors.black12,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
               ),
-            );
-          },
-      ),
-    ),
+            ),
+            Container(
+              decoration:
+              suggestionListDecoration ?? BoxDecoration(color: Colors.white),
+              constraints: BoxConstraints(
+                maxHeight: suggestionListHeight,
+                minHeight: 0,
+                minWidth: 0,
+                maxWidth: suggestionListWidth,
+              ),
+              child: ListView.builder(
+                itemCount: data.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      onTap(data[index]);
+                    },
+                    child: suggestionBuilder != null
+                        ? suggestionBuilder(data[index])
+                        : Container(
+                      color: Colors.blue,
+                      padding: EdgeInsets.all(20.0),
+                      child: Text(
+                        data[index]['display'],
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            )
+          ],),
         )
         : Container();
   }
