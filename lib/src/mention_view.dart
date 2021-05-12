@@ -298,10 +298,11 @@ class FlutterMentionsState extends State<FlutterMentions> {
     return data;
   }
 
-  void hideCursor(){
+  void hideCursor()async{
     setState(() {
       showCursor = false;
     });
+    await Future.delayed(Duration(milliseconds: 1000));
   }
 
   void addMention(Map<String, dynamic> value, [Mention list]) async{
