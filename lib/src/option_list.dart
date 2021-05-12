@@ -30,7 +30,6 @@ class OptionList extends StatelessWidget {
       onWillPop: onClose,
           child: Stack(children: [
             Container(
-              color: Colors.black12,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: GestureDetector(
