@@ -29,14 +29,14 @@ class OptionList extends StatelessWidget {
         ? WillPopScope(
       onWillPop: onClose,
           child: Stack(children: [
-            GestureDetector(
-              onTap: onClose,
-              child: Container(
+             Container(
                 color: Colors.black12,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
+               child: GestureDetector(
+                 onTap: onClose,
+               ),
               ),
-            ),
             Container(
               decoration:
               suggestionListDecoration ?? BoxDecoration(color: Colors.white),
