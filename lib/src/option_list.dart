@@ -23,50 +23,39 @@ class OptionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OverlayEntry overlayEntry;
-   overlayEntry = OverlayEntry(builder: (BuildContext context) {
-      return data.isNotEmpty
-          ? WillPopScope(
-        onWillPop: onClose,
-        child: Container(
-          decoration:
-          suggestionListDecoration ?? BoxDecoration(color: Colors.white),
-          constraints: BoxConstraints(
-            maxHeight: suggestionListHeight,
-            minHeight: 0,
-          ),
-          child: ListView.builder(
-            itemCount: data.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  onTap(data[index]);
-                },
-                child: suggestionBuilder != null
-                    ? suggestionBuilder(data[index])
-                    : Container(
-                  color: Colors.blue,
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    data[index]['display'],
-                    style: TextStyle(fontSize: 12),
-                  ),
+    return data.isNotEmpty
+        ? WillPopScope(
+      onWillPop: onClose,
+          child: Container(
+      decoration:
+      suggestionListDecoration ?? BoxDecoration(color: Colors.white),
+      constraints: BoxConstraints(
+          maxHeight: suggestionListHeight,
+          minHeight: 0,
+      ),
+      child: ListView.builder(
+          itemCount: data.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                onTap(data[index]);
+              },
+              child: suggestionBuilder != null
+                  ? suggestionBuilder(data[index])
+                  : Container(
+                color: Colors.blue,
+                padding: EdgeInsets.all(20.0),
+                child: Text(
+                  data[index]['display'],
+                  style: TextStyle(fontSize: 12),
                 ),
-              );
-            },
-          ),
-        ),
-      )
-          : Container();
-        }
-    );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Overlay.of(context).insert(overlayEntry);
-    });
-
-    return Container();
-
+              ),
+            );
+          },
+      ),
+    ),
+        )
+        : Container();
   }
 }
