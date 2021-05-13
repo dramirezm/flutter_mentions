@@ -321,6 +321,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
       "${_list.trigger}${value['display']}${widget.appendSpaceOnAdd ? ' ' : ''}",
     );
 
+    print("Flutter mentions added value ${value.toString()}");
     if (widget.onMentionAdd != null) widget.onMentionAdd(value);
 
     // if(Platform.isAndroid) {
