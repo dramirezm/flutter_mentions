@@ -324,19 +324,19 @@ class FlutterMentionsState extends State<FlutterMentions> {
     print("Flutter mentions added value ${value.toString()}");
     if (widget.onMentionAdd != null) widget.onMentionAdd(value);
 
-    // if(Platform.isAndroid) {
+    if(Platform.isAndroid) {
       // Move the cursor to next position after the new mentioned item.
       var nextCursorPosition =
           selectedMention.start + 1 + value['display']?.length as int ?? 0;
       if (widget.appendSpaceOnAdd) nextCursorPosition++;
       controller.selection =
           TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
-    // }else{
-    //   controller.value = TextEditingValue(
-    //       text: currentText,
-    //       selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
-    //   );
-    // }
+    }else{
+      controller.value = TextEditingValue(
+          text: currentText,
+          selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
+      );
+    }
     await Future.delayed(Duration(milliseconds: 1000));
     setState(() {
       showCursor = true;
