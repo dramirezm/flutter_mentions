@@ -302,15 +302,14 @@ class FlutterMentionsState extends State<FlutterMentions> {
     setState(() {
       showCursor = false;
     });
-    await Future.delayed(Duration(milliseconds: 1000));
   }
 
   void addMention(Map<String, dynamic> value, [Mention list]) async{
     final selectedMention = _selectedMention;
 
-   // setState(() {
+    setState(() {
       _selectedMention = null;
-   // });
+    });
 
     final _list = widget.mentions
         .firstWhere((element) => selectedMention.str.contains(element.trigger));
@@ -322,32 +321,25 @@ class FlutterMentionsState extends State<FlutterMentions> {
       "${_list.trigger}${value['display']}${widget.appendSpaceOnAdd ? ' ' : ''}",
     );
 
-    var nextCursorPosition = selectedMention.start + 1 + value['display']?.length ?? 0;
-
-    if (widget.appendSpaceOnAdd) nextCursorPosition++;
-    controller.selection =
-        TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
-
-
-
     if (widget.onMentionAdd != null) widget.onMentionAdd(value);
 
     // if(Platform.isAndroid) {
       // Move the cursor to next position after the new mentioned item.
-
-    print("FLutterMentions CurrentText ${currentText}");
-    print("FLutterMentions SelectedMentionStart ${selectedMention.start}");
-    print("FLutterMentions SelectedMentionStart ${selectedMention.end}");
-    print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
-    print("FLutterMentions nextCursorPosition ${nextCursorPosition}");
-
+      var nextCursorPosition =
+          selectedMention.start + 1 + value['display']?.length as int ?? 0;
+      if (widget.appendSpaceOnAdd) nextCursorPosition++;
+      controller.selection =
+          TextSelection.fromPosition(TextPosition(offset: nextCursorPosition));
     // }else{
     //   controller.value = TextEditingValue(
     //       text: currentText,
     //       selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
     //   );
     // }
-
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+      showCursor = true;
+    });
   }
 
   void suggestionListerner() {
@@ -468,6 +460,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
                       return ele == str ? false : ele.contains(str);
                     }).toList(),
                     onTap: (value) async {
+                      hideCursor();
                       addMention(value, list);
                       showSuggestions.value = false;
                     },
@@ -495,7 +488,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
                 textAlign: widget.textAlign,
                 textDirection: widget.textDirection,
                 readOnly: widget.readOnly,
-                showCursor: widget.showCursor,
+                showCursor: showCursor,
                 autofocus: widget.autofocus,
                 autocorrect: widget.autocorrect,
                 // maxLengthEnforcement: widget.maxLengthEnforcement,
