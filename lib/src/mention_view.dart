@@ -306,7 +306,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
 
   void addMention(Map<String, dynamic> value, [Mention list]) async{
     final selectedMention = _selectedMention;
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(Duration(milliseconds: 100));
     setState(() {
       _selectedMention = null;
     });
@@ -337,7 +337,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
           selection: TextSelection.fromPosition(TextPosition(offset: currentText.length))
       );
     }
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(Duration(milliseconds: 100));
     setState(() {
       showCursor = true;
     });
