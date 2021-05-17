@@ -8,10 +8,12 @@ class OptionList extends StatelessWidget {
     this.suggestionListWidth,
     this.suggestionBuilder,
     this.suggestionListDecoration,
-    this.onClose
+    this.onClose,
+    this.scrollController
   });
 
   final Widget Function(Map<String, dynamic>) suggestionBuilder;
+  final ScrollController scrollController;
 
   final List<Map<String, dynamic>> data;
 
@@ -47,26 +49,31 @@ class OptionList extends StatelessWidget {
                   minWidth: 0,
                   maxWidth: suggestionListWidth,
                 ),
-                child: ListView.builder(
-                  itemCount: data.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        onTap(data[index]);
-                      },
-                      child: suggestionBuilder != null
-                          ? suggestionBuilder(data[index])
-                          : Container(
-                        color: Colors.blue,
-                        padding: EdgeInsets.all(20.0),
-                        child: Text(
-                          data[index]['display'],
-                          style: TextStyle(fontSize: 12),
+                child: Scrollbar(
+                  controller: scrollController,
+                  isAlwaysShown: data.length  <= 1 ?  false: true,
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: data.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          onTap(data[index]);
+                        },
+                        child: suggestionBuilder != null
+                            ? suggestionBuilder(data[index])
+                            : Container(
+                          color: Colors.blue,
+                          padding: EdgeInsets.all(20.0),
+                          child: Text(
+                            data[index]['display'],
+                            style: TextStyle(fontSize: 12),
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

@@ -256,6 +256,7 @@ class FlutterMentionsState extends State<FlutterMentions> {
   LengthMap _selectedMention;
   String _pattern = '';
   bool showCursor = true;
+  ScrollController _scrollController = ScrollController();
 
   Map<String, Annotation> mapToAnotation() {
     final data = <String, Annotation>{};
@@ -452,13 +453,22 @@ class FlutterMentionsState extends State<FlutterMentions> {
                     suggestionListWidth: widget.suggestionListWidth,
                     suggestionBuilder: list.suggestionBuilder,
                     suggestionListDecoration: widget.suggestionListDecoration,
+                    scrollController: _scrollController,
                     data: list.data.where((element) {
                       final ele = element['display'].toLowerCase();
+                      final name = element['name'].toLowerCase();
+                      final strName = _selectedMention.str.toLowerCase().replaceAll("@", '');
                       final str = _selectedMention.str
                           .toLowerCase()
                           .replaceAll(RegExp(_pattern), '');
-
-                      return ele == str ? false : ele.contains(str);
+                      // print("UsersTyping  ${ele} + ${name} + ${str} + ${strName} + ${_pattern}");
+                      if(ele == str || ele.contains(str)){
+                        return true;
+                      }else if(name == strName || name.contains(strName)){
+                        return true;
+                      }else {
+                        return false;
+                      }
                     }).toList(),
                     onTap: (value) async {
                       hideCursor();
